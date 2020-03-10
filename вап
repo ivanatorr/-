@@ -1,0 +1,171 @@
+#include <iostream>
+#include <cmath>
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
+#include<ctype.h>
+
+
+using namespace std;
+int menu();  //меню
+float machine_zero(float e, int &k);  //машинны ноль в формате float
+double machine_zero1(double e, int &k);  //машинный ноль в формате double
+float comp();   //вычесление функции с помощью стандартных библиотек в формате float
+double comp1();     //вычесление функции с помощью стандартных библиотек в формате double
+float teylor(float e);  //разложение ряда тейлора в формате float
+double teylor1(double e);   //разложение ряда тейлора в формате double
+int main()
+{
+    setlocale(LC_ALL, "rus");
+    float e;
+    int k=0;
+    float s;
+    int variant;
+    do{                                                     //вызов меню
+    variant = menu();
+    switch (variant) {
+        case 1:
+            cout << "Ряд тейлора в формате float..." << endl;
+           machine_zero(e,k);
+           comp();
+           s=teylor(e);
+
+
+            break;
+        case 2:
+            cout <<"Ряд тейлора в формате double..."<< endl;
+            machine_zero1(e,k);
+            comp1();
+            s=teylor1(e);
+
+            break;
+        case 3:
+            cout << "Выход из программы..." << endl;
+            exit(EXIT_SUCCESS);
+            break;
+    }
+if (variant !=4)
+            system("pause"); // задерживаем выполнение, чтобы пользователь мог увидеть результат выполнения выбранного пункта
+    } while (variant !=4);
+
+
+
+}
+int menu()                                      //навигация по меню
+{
+    int variant;
+    do{
+    cout << "Выберите вариант\n" << endl;
+    cout << "1. ряд тейлора в формате float\n"
+         << "2. ряд тейлора в формате double\n"
+         << "3. выйти\n" << endl;
+    cout << ">>> ";
+    while (!(cin >>variant) || (cin.peek() != '\n'))
+{
+    cin.clear();
+    while (cin.get() != '\n');
+    cout<<"Введите число от 1 до 3: "<<endl;
+}
+    }while(variant<0);
+    return variant;
+}
+float comp()
+{
+    cout<<"Результат с помощью стандартных библиотек"<<endl;
+    float x=1;
+    float f2;
+    for(int i=0; i<10; i++)
+    {
+        f2=-2+sin(3*x);
+        x+=0.1;
+        cout<<f2<<endl;
+    }
+}
+double comp1()
+{
+    cout<<"Результат с помощью стандартных библиотек"<<endl;
+    double x=1;
+    double f2;
+    for(int i=0; i<10; i++)
+    {
+        f2=-2+sin(3*x);
+        x+=0.1;
+        cout<<f2<<endl;
+    }
+}
+float machine_zero(float e, int &k)
+{
+
+
+    float e1;
+    k = 0;
+
+    do {
+        e /= 2.0;
+        e1 = e + 1.0;
+        k++;
+    } while(e1 > 1.0);
+    return e;
+}
+float teylor(float e)
+{
+float y, s1, s2,fact,p1;
+int k,z;
+float x;
+for(int i=0; i<10; i++)
+{
+    y=-2;
+    s1=5;       //присваеваем какое-то число
+    z = 1;
+    for(k=0;abs(s1)>e; k++)     //цикл выполняется пока член ряда тейлора больше машинного нуля
+    {
+        p1=1;
+        fact=(2*k+1);
+        while(fact>0)
+        {
+            p1*=fact;       //находим факториал
+            fact--;
+        }
+        s1=z*(pow(3*x,2*k+1)/p1);   //вместо числа присваеваим член ряда тейлора
+        y+=s1;
+        z=-z;
+    }
+    cout<<k<<" - Количество иттераций"<<endl;
+    cout<<y<<endl;
+    cout<<(-2+sin(3*x))-y<<" - Точность отностельно машинного нуля\n"<<endl;
+    x+=0.1;
+}
+}
+
+
+
+double machine_zero1(double e, int &k)
+{
+
+
+    double e1;
+    k = 0;
+
+    do {
+        e /= 2.0;
+        e1 = e + 1.0;
+        k++;
+    } while(e1 > 1.0);
+
+    return e;
+}
+double teylor1(double e)
+{
+double y, s1, s2,fact,p1;
+int k,z;
+double x;
+for(int i=0; i<10; i++)
+{
+    y=-2;
+    s1=5;
+    z = 1;
+    for(k=0;abs(s1)>e; k++)
+    {
+        p1=1;
